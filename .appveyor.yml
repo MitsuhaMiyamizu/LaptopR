@@ -19,20 +19,19 @@ environment:
     - rsource_url: https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz
       rversion: r-patched
       cran: true
-    - rsource_url: https://cran.r-project.org/src/base-prerelease/R-devel.tar.gz
-      rversion: r-devel
-      cran: true
 before_build:
   #- call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 install:
   - ps: Import-Module .\script.ps1
-    #- ps: InstallInno
-    #- ps: InstallMiktex
+  - ps: InstallInno
+  - ps: InstallMiktex
   - ps: InstallRtoolsExe
   - ps: SetTimezone
 
 build_script:
+  - dir "C:\\Program Files (x86)\\"
+  - dir "C:\\Program Files\\"
   - mkdir intel_mkl
   - ps: Invoke-WebRequest $env:LICENSE_FILE -OutFile license.lic
   - dir
