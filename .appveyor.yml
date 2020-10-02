@@ -33,9 +33,10 @@ install:
   - ps: SetTimezone
 
 build_script:
-  - dotnet add package intelmkl.redist.win-x64 --version 2020.3.279
-  - dotnet add package intelopenmp.devel.win --version 2020.2.254
-  - dotnet add package intelmkl.devel.win-x64 --version 2020.3.279
+  - mkdir intel_mkl
+  - ps: Install-Package NuGet.CommandLine
+  - ps: Install-Package intelmkl.devel.win-x64 -Version 2020.3.279
+  - ps: Install-Package intelmkl.redist.win-x64 -Version 2020.3.279
   - ps: (new-object System.Net.WebClient).DownloadFile('${LICENSE_FILE}', '${LICLOCAL}')
   - mkdir C:\Program Files (x86)\Common Files\Intel
   - mkdir C:\Program Files (x86)\Common Files\Intel\Licenses\
