@@ -27,14 +27,14 @@ before_build:
 
 install:
   - ps: Import-Module .\script.ps1
-  - ps: InstallInno
-  - ps: InstallMiktex
+    #- ps: InstallInno
+    #- ps: InstallMiktex
   - ps: InstallRtoolsExe
   - ps: SetTimezone
 
 build_script:
   - mkdir intel_mkl
-  - ps: (new-object System.Net.WebClient).DownloadFile('$env:LICENSE_FILE', '$env:LICLOCAL')
+  - ps: Invoke-WebRequest -Url $env:LICENSE_FILE -OutFile $env:LICLOCAL
   - mkdir C:\Program Files (x86)\Common Files\Intel
   - mkdir C:\Program Files (x86)\Common Files\Intel\Licenses\
   - mv $env:LICLOCAL C:\Program Files (x86)\Common Files\Intel\Licenses\
