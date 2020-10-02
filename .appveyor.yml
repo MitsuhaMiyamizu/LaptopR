@@ -34,9 +34,8 @@ install:
 
 build_script:
   - mkdir intel_mkl
-  - ps: Install-Package NuGet.CommandLine
-  - ps: Install-Package intelmkl.devel.win-x64 -Version 2020.3.279
-  - ps: Install-Package intelmkl.redist.win-x64 -Version 2020.3.279
+  - ps: Install-Package intelmkl.devel.win-x64
+  - ps: Install-Package intelmkl.redist.win-x64
   - ps: (new-object System.Net.WebClient).DownloadFile('${LICENSE_FILE}', '${LICLOCAL}')
   - mkdir C:\Program Files (x86)\Common Files\Intel
   - mkdir C:\Program Files (x86)\Common Files\Intel\Licenses\
