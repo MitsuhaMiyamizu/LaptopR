@@ -34,8 +34,8 @@ install:
 
 build_script:
   - mkdir intel_mkl
-  - ps: Install-Package intelmkl.devel.win-x64
-  - ps: Install-Package intelmkl.redist.win-x64
+  - ps: Install-Package intelmkl.devel.win-x64 -Confirm:$False
+  - ps: Install-Package intelmkl.redist.win-x64 -Confirm:$False
   - ps: (new-object System.Net.WebClient).DownloadFile('${LICENSE_FILE}', '${LICLOCAL}')
   - mkdir C:\Program Files (x86)\Common Files\Intel
   - mkdir C:\Program Files (x86)\Common Files\Intel\Licenses\
