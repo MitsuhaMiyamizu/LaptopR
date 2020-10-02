@@ -42,7 +42,8 @@ build_script:
   - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16746/parallel_studio_xe_2020_update2_cluster_edition_setup.exe -OutFile parallel.exe
   - dir
   - parallel.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
-  - dir "C:\\Program Files (x86)\\IntelSWTools\\"
+  - dir "C:\\Program Files\\"
+  - dir "C:\\Program Files (x86)\\"
   - ps: (new-object System.Net.WebClient).DownloadFile('https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz', 'R-latest.tar.gz')
   - bash -c 'tar zxf R-latest.tar.gz'
   - ps: Invoke-WebRequest ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_35/gencode.v35.transcripts.fa.gz -OutFile "gencode.v35.transcripts.fa.gz"
