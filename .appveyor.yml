@@ -1,0 +1,65 @@
+branches:
+    except:
+      - 1.0.13_OSX
+      - /[0-9].+[0-9]_MSVC+[0-9]*/
+      - /[0-9].+[0-9]_OSX/
+      - /^untagged/
+version: '{build}'
+platform:
+  - x64
+matrix:
+  - rsource_url: https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz
+    rversion: r-patched
+    cran: true
+  - rsource_url: https://cran.r-project.org/src/base-prerelease/R-devel.tar.gz
+    rversion: r-devel
+    cran: true
+image: 
+  - Visual Studio 2019
+environment:
+  LICENSE_FILE:
+    secure: A5hBQ7mj5AKj5G/EHyznf+xxg/Ct2E7R4OLtzN6/uVyI8udxG6ML9YnDkUzqXNsK
+  LICLOCAL:
+    secure: 2wEyKqfdkKVnTmihIh+X5g==  
+
+before_build:
+  #- call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+
+install:
+  - ps: Import-Module .\script.ps1
+  - ps: InstallInno
+  - ps: InstallMiktex
+  - ps: InstallRtoolsExe
+  - ps: SetTimezone
+
+build_script:
+  - dotnet add package intelmkl.redist.win-x64 --version 2020.3.279
+  - dotnet add package intelopenmp.devel.win --version 2020.2.254
+  - dotnet add package intelmkl.devel.win-x64 --version 2020.3.279
+  - ps: (new-object System.Net.WebClient).DownloadFile('${LICENSE_FILE}', '${LICLOCAL}')
+  - mkdir C:\Program Files (x86)\Common Files\Intel
+  - mkdir C:\Program Files (x86)\Common Files\Intel\Licenses\
+  - mv ${LICLOCAL} C:\Program Files (x86)\Common Files\Intel\Licenses\
+  - ps: (new-object System.Net.WebClient).DownloadFile('http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16746/parallel_studio_xe_2020_update2_cluster_edition_setup.exe','parallel.exe')
+  - parallel.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
+  - dir C:\Program Files (x86)\IntelSWTools\
+  - ps: Invoke-WebRequest ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_35/gencode.v35.transcripts.fa.gz -OutFile "gencode.v35.transcripts.fa.gz"
+  - bash -c 'gzip -d gencode.v35.transcripts.fa.gz'
+  - .\seqmap.exe 0 HG-U133_Plus_2.probe_fasta gencode.v35.transcripts.fa results.txt /eland:3 /available_memory:300000 /output_all_matches
+  - ps: $env:BUILD_NAME="seqmap-$env:APPVEYOR_REPO_TAG_NAME-win-$env:PLATFORM"
+  - bash -c 'mkdir $BUILD_NAME'
+  - bash -c 'cp seqmap.exe results.txt $BUILD_NAME'
+  - bash -c '7z a $BUILD_NAME.zip $BUILD_NAME'
+artifacts:
+  - path: $(BUILD_NAME).zip
+deploy:
+   provider: GitHub
+   auth_token:
+      secure: WmC0eZCDuT3pjI7SNaZWtj6Bsr+ubsHfYJzSa3iWfvwxRX1orBbeb/Cnz6F1tQee
+   artifact: $(BUILD_NAME).zip
+   prerelease: true
+   force_update: true
+   tag: $(APPVEYOR_REPO_TAG_NAME)
+   on:
+      branch: master
+      APPVEYOR_REPO_TAG: true
