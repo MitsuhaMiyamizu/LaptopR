@@ -14,7 +14,14 @@ environment:
     secure: A5hBQ7mj5AKj5G/EHyznf+xxg/Ct2E7R4OLtzN6/uVyI8udxG6ML9YnDkUzqXNsK
   LICLOCAL:
     secure: 2wEyKqfdkKVnTmihIh+X5g==  
-
+  RTOOLS_ARCH: x86_64
+  matrix:
+    - rsource_url: https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz
+      rversion: r-patched
+      cran: true
+    - rsource_url: https://cran.r-project.org/src/base-prerelease/R-devel.tar.gz
+      rversion: r-devel
+      cran: true
 before_build:
   #- call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 
