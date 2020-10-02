@@ -39,7 +39,8 @@ build_script:
   - mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
   - mkdir "C:\\Program Files (x86)\Common Files\Intel\\Licenses\\"
   - mv license.lic "C:\\Program Files (x86)\\Common Files\\Intel\\Licenses\\"
-  - ps: (new-object System.Net.WebClient).DownloadFile('http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16746/parallel_studio_xe_2020_update2_cluster_edition_setup.exe','parallel.exe')
+  - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16746/parallel_studio_xe_2020_update2_cluster_edition_setup.exe -OutFile parallel.exe
+  - dir
   - parallel.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
   - dir "C:\\Program Files (x86)\\IntelSWTools\\"
   - ps: (new-object System.Net.WebClient).DownloadFile('https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz', 'R-latest.tar.gz')
