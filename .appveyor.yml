@@ -34,10 +34,10 @@ install:
 
 build_script:
   - mkdir intel_mkl
-  - ps: (new-object System.Net.WebClient).DownloadFile('${LICENSE_FILE}', '${LICLOCAL}')
+  - ps: (new-object System.Net.WebClient).DownloadFile('$env:LICENSE_FILE', '$env:LICLOCAL')
   - mkdir C:\Program Files (x86)\Common Files\Intel
   - mkdir C:\Program Files (x86)\Common Files\Intel\Licenses\
-  - mv ${LICLOCAL} C:\Program Files (x86)\Common Files\Intel\Licenses\
+  - mv $env:LICLOCAL C:\Program Files (x86)\Common Files\Intel\Licenses\
   - ps: (new-object System.Net.WebClient).DownloadFile('http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16746/parallel_studio_xe_2020_update2_cluster_edition_setup.exe','parallel.exe')
   - parallel.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
   - dir C:\Program Files (x86)\IntelSWTools\
