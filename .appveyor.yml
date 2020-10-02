@@ -30,9 +30,6 @@ install:
   - ps: SetTimezone
 
 build_script:
-  - ps: dir "C:\\Program Files (x86)\\"
-  - ps: dir "C:\\Program Files\\"
-  - mkdir intel_mkl
   - ps: Invoke-WebRequest $env:LICENSE_FILE -OutFile license.lic
   - dir
   - mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
@@ -41,24 +38,17 @@ build_script:
   - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16746/parallel_studio_xe_2020_update2_cluster_edition_setup.exe -OutFile parallel.exe
   - dir
   - parallel.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
-  - ps: dir "C:\\Program Files\\"
-  - ps: dir "C:\\Program Files (x86)\\"
-  - ps: dir "C:\\Program Files (x86)\\IntelSWTools\\"
-  - ps: (new-object System.Net.WebClient).DownloadFile('https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz', 'R-latest.tar.gz')
+  - ps: dir "C:\\Program Files (x86)\\IntelSWTools\\parallel_studio_xe_2020.2.899\\bin\\"
+  - call "C:\\Program Files (x86)\\IntelSWTools\\parallel_studio_xe_2020.2.899\\bin\\psxevars.bat" intel64
+  - ps: Invoke-WebRequest https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz -OutFile R-latest.tar.gz
   - bash -c 'tar zxf R-latest.tar.gz'
-  - ps: Invoke-WebRequest ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_35/gencode.v35.transcripts.fa.gz -OutFile "gencode.v35.transcripts.fa.gz"
-  - bash -c 'gzip -d gencode.v35.transcripts.fa.gz'
-  - .\seqmap.exe 0 HG-U133_Plus_2.probe_fasta gencode.v35.transcripts.fa results.txt /eland:3 /available_memory:300000 /output_all_matches
-  - ps: $env:BUILD_NAME="seqmap-$env:APPVEYOR_REPO_TAG_NAME-win-$env:PLATFORM"
-  - bash -c 'mkdir $BUILD_NAME'
-  - bash -c 'cp seqmap.exe results.txt $BUILD_NAME'
-  - bash -c '7z a $BUILD_NAME.zip $BUILD_NAME'
+  - C:\rtools40\usr\bin\bash --login -c "./full-build.sh"
 artifacts:
   - path: $(BUILD_NAME).zip
 deploy:
    provider: GitHub
    auth_token:
-      secure: WmC0eZCDuT3pjI7SNaZWtj6Bsr+ubsHfYJzSa3iWfvwxRX1orBbeb/Cnz6F1tQee
+      secure: 
    artifact: $(BUILD_NAME).zip
    prerelease: true
    force_update: true
