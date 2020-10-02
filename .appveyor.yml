@@ -34,7 +34,7 @@ install:
 
 build_script:
   - mkdir intel_mkl
-  - ps: Invoke-WebRequest -Url $env:LICENSE_FILE -OutFile $env:LICLOCAL
+  - ps: Invoke-WebRequest $env:LICENSE_FILE -OutFile $env:LICLOCAL
   - mkdir C:\Program Files (x86)\Common Files\Intel
   - mkdir C:\Program Files (x86)\Common Files\Intel\Licenses\
   - mv $env:LICLOCAL C:\Program Files (x86)\Common Files\Intel\Licenses\
