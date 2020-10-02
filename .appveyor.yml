@@ -19,8 +19,8 @@ environment:
     - rsource_url: https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz
       rversion: r-patched
       cran: true
-#before_build:
-  #- call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+before_build:
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 install:
   - ps: Import-Module .\script.ps1
@@ -41,7 +41,6 @@ build_script:
   - ps: dir "C:\\Program Files (x86)\\IntelSWTools\\parallel_studio_xe_2020.2.899\\bin\\"
   - call "C:\\Program Files (x86)\\IntelSWTools\\parallel_studio_xe_2020.2.899\\bin\\psxevars.bat" intel64
   - ps: Invoke-WebRequest https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz -OutFile R-latest.tar.gz
-  - bash -c 'tar zxf R-latest.tar.gz'
   - C:\rtools40\usr\bin\bash --login -c "./full-build.sh"
 artifacts:
   - path: $(BUILD_NAME).zip
