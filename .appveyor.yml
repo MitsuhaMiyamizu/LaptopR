@@ -24,6 +24,7 @@ install:
   - ps: SetTimezone
 
 build_script:
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
   - ps: Invoke-WebRequest $env:LICENSE_FILE -OutFile license.lic
   - dir
   - mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
@@ -33,8 +34,9 @@ build_script:
   - dir
   - parallel.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-  - call "C:\\Program Files (x86)\\IntelSWTools\\parallel_studio_xe_2020.2.899\\bin\\psxevars.bat" intel64 vs2019
-  - cd C:\Program Files\R\R-4.0.2\bin\x64
+  - ps: Invoke-WebRequest https://ftp.osuosl.org/pub/cran/bin/windows/base/R-devel-win.exe -OutFile Rwin.exe
+  - ps: .\Rwin.exe /VERYSILENT
+  - cd C:\Program Files\R\R-devel\bin\x64
   - dumpbin /exports Rblas.dll > Rblas_list.txt
   - dumpbin /exports Rlapack.dll > Rlapack_list_R.txt
   - bash -c 'mkdir $APPVEYOR_BUILD_FOLDER/$BUILD_NAME'
