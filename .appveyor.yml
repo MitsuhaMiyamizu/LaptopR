@@ -15,12 +15,6 @@ environment:
   LICLOCAL:
     secure: 2wEyKqfdkKVnTmihIh+X5g==  
   RTOOLS_ARCH: x86_64
-  matrix:
-    - rsource_url: https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz
-      rversion: r-patched
-      cran: true
-before_build:
-  #- call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 install:
   - ps: Import-Module .\script.ps1
@@ -38,17 +32,21 @@ build_script:
   - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16746/parallel_studio_xe_2020_update2_cluster_edition_setup.exe -OutFile parallel.exe
   - dir
   - parallel.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat
-  - ps: dir "C:\\Program Files (x86)\\IntelSWTools\\parallel_studio_xe_2020.2.899\\bin\\"
-  - call "C:\\Program Files (x86)\\IntelSWTools\\parallel_studio_xe_2020.2.899\\bin\\psxevars.bat" intel64
-  - ps: Invoke-WebRequest https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz -OutFile R-latest.tar.gz
-  - C:\rtools40\usr\bin\bash --login -c "./full-build.sh"
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - call "C:\\Program Files (x86)\\IntelSWTools\\parallel_studio_xe_2020.2.899\\bin\\psxevars.bat" intel64 vs2019
+  - cd C:\Program Files\R\R-4.0.2\bin\x64
+  - dumpbin /exports Rblas.dll > Rblas_list.txt
+  - dumpbin /exports Rlapack.dll > Rlapack_list_R.txt
+  - bash -c 'mkdir $APPVEYOR_BUILD_FOLDER/$BUILD_NAME'
+  - bash -c 'cp C:/Program Files/R/R-4.0.2/bin/x64/*.txt $APPVEYOR_BUILD_FOLDER/$BUILD_NAME'
+  - bash -c '7z a $APPVEYOR_BUILD_FOLDER/$BUILD_NAME.zip $APPVEYOR_BUILD_FOLDER/$BUILD_NAME'
+
 artifacts:
-  - path: $(BUILD_NAME).zip
+  - path: $APPVEYOR_BUILD_FOLDER/$(BUILD_NAME).zip
 deploy:
    provider: GitHub
    auth_token:
-      secure: 
+      secure: ULbLUjD/4O1vvWimREM8MhhTC6yx7PtfPVF+MYaw4ZtJVbINLjQF0hwGCWh7U/ZC
    artifact: $(BUILD_NAME).zip
    prerelease: true
    force_update: true
