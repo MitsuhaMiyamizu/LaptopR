@@ -1,6 +1,10 @@
 # LaptopR
 Vanilla R Compiled by mingw64 w/ Intel Math Kernel Library.
 
+# Build Status
+
+[![Build Status](https://ci.appveyor.com/api/projects/status/4cw0h6yt854gpfxv?retina=true)](https://ci.appveyor.com/project/Kiritoalex/laptopr)
+
 # Reference
 
 [R-windows](https://github.com/r-windows/r-base)
