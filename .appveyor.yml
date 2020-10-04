@@ -19,7 +19,10 @@ environment:
 install:
   - ps: Import-Module .\script.ps1
   - ps: SetTimezone
-
+  - ps: Invoke-WebRequest https://ftp.osuosl.org/pub/cran/bin/windows/base/R-4.0.2-win.exe -OutFile Rwin.exe
+  - ps: .\Rwin.exe /VERYSILENT
+  - cd C:\Program Files\R\R-3.6.3\bin\x64
+  - dir
 build_script:
   - ps: Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile license.lic
   - mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
@@ -27,10 +30,7 @@ build_script:
   - mv license.lic "C:\\Program Files (x86)\\Common Files\\Intel\\Licenses\\"
   - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16896/w_mkl_2020.3.279.exe -OutFile mkl.exe
   - mkl.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64 
-  - ps: Invoke-WebRequest https://ftp.osuosl.org/pub/cran/bin/windows/base/R-devel-win.exe -OutFile Rwin.exe
-  - ps: .\Rwin.exe /VERYSILENT
-  - cd C:\Program Files\R\R-devel\bin\x64
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
   - dumpbin /exports Rblas.dll > Rblas_list.txt
   - dumpbin /exports Rlapack.dll > Rlapack_list_R.txt
   - bash -c 'mkdir $APPVEYOR_BUILD_FOLDER/$BUILD_NAME'
