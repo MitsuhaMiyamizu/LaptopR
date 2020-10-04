@@ -21,8 +21,8 @@ install:
   - ps: SetTimezone
   - ps: Invoke-WebRequest https://ftp.osuosl.org/pub/cran/bin/windows/base/R-4.0.2-win.exe -OutFile Rwin.exe
   - ps: .\Rwin.exe /VERYSILENT
-  - cd C:\Program Files\R\
-  - cd C:\Program Files (x86)\R\
+  - ps: ls 'C:\Program Files\'
+  - ps: ls 'C:\Program Files (x86)\'
   - dir
 build_script:
   - ps: Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile license.lic
