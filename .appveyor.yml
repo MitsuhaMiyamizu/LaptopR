@@ -38,9 +38,8 @@ build_script:
   - bash -c 'cp Rblas_list.txt ./builder/'
   - ps: cp 'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\redist\intel64\compiler\libiomp5md.dll' 'C:\projects\laptopr\builder\'
   - cd .\builder\
-  - ps: ls .
-  - nmake libintel64 MKLROOT=C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl export=Rblas_list.txt name=Rblas 
-  - nmake libintel64 MKLROOT=C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl export=Rlapack_list.txt name=Rlapack
+  - nmake libintel64 MKLROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl" export=Rblas_list.txt name=Rblas 
+  - nmake libintel64 MKLROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl" export=Rlapack_list.txt name=Rlapack
   - cd ..
   - dumpbin /dependents ./builder/Rlapack.dll
   - bash -c '7z a R.7z ./builder/'
