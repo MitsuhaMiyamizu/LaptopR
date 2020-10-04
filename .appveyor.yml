@@ -24,6 +24,7 @@ install:
   - ps: Invoke-WebRequest $env:RDEV -OutFile R-devel.zip
   - bash -c 'unzip -qq R-devel.zip'
   - ps: pwd
+
 build_script:
   - ps: Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile license.lic
   - mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
@@ -31,6 +32,7 @@ build_script:
   - mv license.lic "C:\\Program Files (x86)\\Common Files\\Intel\\Licenses\\"
   - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16896/w_mkl_2020.3.279.exe -OutFile mkl.exe
   - mkl.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
+  - ps: ls 'C:\Program Files (x86)\IntelSWTools\'
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
   - cd R-devel\bin\x64
   - dumpbin /exports Rblas.dll > Rblas_list.txt
