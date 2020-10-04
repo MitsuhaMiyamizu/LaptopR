@@ -38,18 +38,18 @@ build_script:
   - bash -c 'mkdir $APPVEYOR_BUILD_FOLDER/$BUILD_NAME/log/'
   - bash -c 'cp *.txt C:/projects/laptopr/log/'
   - cd ..\..\..
-  - bash -c '7z a $BUILD_NAME.zip C:/projects/laptopr/log/'
+  - bash -c '7z a log.zip C:/projects/laptopr/log/'
 
 artifacts:
-  - path: $APPVEYOR_BUILD_FOLDER/$(BUILD_NAME).zip
+  - path: C:/projects/laptopr/log.zip
 deploy:
    provider: GitHub
    auth_token:
       secure: ULbLUjD/4O1vvWimREM8MhhTC6yx7PtfPVF+MYaw4ZtJVbINLjQF0hwGCWh7U/ZC
-   artifact: $(BUILD_NAME).zip
+   artifact: log.zip
    prerelease: true
    force_update: true
    tag: $(APPVEYOR_REPO_TAG_NAME)
    on:
-      branch: master
+      branch: main
       APPVEYOR_REPO_TAG: true
