@@ -35,9 +35,10 @@ build_script:
   - cd R-devel\bin\x64
   - dumpbin /exports Rblas.dll > Rblas_list.txt
   - dumpbin /exports Rlapack.dll > Rlapack_list_R.txt
-  - bash -c 'mkdir $APPVEYOR_BUILD_FOLDER/$BUILD_NAME'
-  - bash -c 'cp C:/Program Files/R/R-4.0.2/bin/x64/*.txt $APPVEYOR_BUILD_FOLDER/$BUILD_NAME'
-  - bash -c '7z a $APPVEYOR_BUILD_FOLDER/$BUILD_NAME.zip $APPVEYOR_BUILD_FOLDER/$BUILD_NAME'
+  - bash -c 'mkdir $APPVEYOR_BUILD_FOLDER/$BUILD_NAME/log/'
+  - bash -c 'cp C:/Program Files/R/R-4.0.2/bin/x64/*.txt C:/projects/laptopr/log/'
+  - cd $APPVEYOR_BUILD_FOLDER/
+  - bash -c '7z a $BUILD_NAME.zip C:/projects/laptopr/log/'
 
 artifacts:
   - path: $APPVEYOR_BUILD_FOLDER/$(BUILD_NAME).zip
