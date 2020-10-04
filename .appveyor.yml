@@ -51,9 +51,9 @@ deploy:
     auth_token:
       secure: cBYFQ45LcM135O5JkMlE7tb4XmAUK709NnFe0o2RhpMUOFbRzqW6OFY7X2x/U/TZ
     artifact: R.7z
-    release: R-v$(APPVEYOR_REPO_TAG_NAME)
+    release: R-$(APPVEYOR_REPO_TAG_NAME)
     prerelease: false
-    description: R-v$(APPVEYOR_REPO_TAG_NAME)
+    description: R-$(APPVEYOR_REPO_TAG_NAME)
     force_update: true
     on:
       branch: $(APPVEYOR_REPO_TAG_NAME)
