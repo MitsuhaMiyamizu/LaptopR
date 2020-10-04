@@ -32,15 +32,17 @@ build_script:
   - mv license.lic "C:\\Program Files (x86)\\Common Files\\Intel\\Licenses\\"
   - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16896/w_mkl_2020.3.279.exe -OutFile mkl.exe
   - mkl.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
-  - ps: ls 'C:\Program Files (x86)\IntelSWTools\'
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
-  - cd R-devel\bin\x64
-  - dumpbin /exports Rblas.dll > Rblas_list.txt
-  - dumpbin /exports Rlapack.dll > Rlapack_list_R.txt
-  - bash -c 'mkdir $APPVEYOR_BUILD_FOLDER/$BUILD_NAME/log/'
-  - bash -c 'cp *.txt C:/projects/laptopr/log/'
-  - cd ..\..\..
-  - bash -c '7z a log.zip C:/projects/laptopr/log/'
+  - ps: Invoke-WebRequest https://github.com/Neutron3529/Misc/releases/download/R_blas_lapack_list/R_blas_lapack_list.7z -OutFile list.7z
+  - bash -c '7z x list.7z'
+  - bash -c 'cp -r C:/Program Files (x86)/IntelSWTools/compilers_and_libraries_2020.3.279/windows/mkl/tools/builder/ C:/projects/laptopr/'
+  - ps: ls
+  - ps: cp Rlapack_list_R.txt Rblas_list.txt builder/
+  - cd builder/
+  - nmake libintel64 export=Rblas_list.txt name=Rblas 
+  - nmake libintel64 export=Rlapack_list_R.txt name=Rlapack
+  - cd ..
+  - bash -c 'zip -r R.zip ./builder/'
 
 artifacts:
   - path: log.zip
