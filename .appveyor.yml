@@ -33,16 +33,16 @@ build_script:
   - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16896/w_mkl_2020.3.279.exe -OutFile mkl.exe
   - mkl.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
-  - ps: Invoke-WebRequest https://github.com/Neutron3529/Misc/releases/download/R_blas_lapack_list/R_blas_lapack_list.7z -OutFile list.7z
-  - bash -c '7z x list.7z'
   - ps: cp -r 'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl\tools\builder\' 'C:\projects\laptopr\'
-  - ps: ls
   - bash -c 'cp Rlapack_list.txt ./builder/'
   - bash -c 'cp Rblas_list.txt ./builder/'
+  - ps: cp 'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\redist\intel64\mkl\libiomp5md.dll' 'C:\projects\laptopr\builder\'
   - cd .\builder\
-  - nmake libintel64 MKLROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl" export=Rblas_list.txt name=Rblas 
-  - nmake libintel64 MKLROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl" export=Rlapack_list.txt name=Rlapack
+  - ps: ls .
+  - nmake libintel64 MKLROOT=C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl export=Rblas_list.txt name=Rblas 
+  - nmake libintel64 MKLROOT=C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl export=Rlapack_list.txt name=Rlapack
   - cd ..
+  - dumpbin /dependents ./builder/Rlapack.dll
   - bash -c '7z a R.7z ./builder/'
 
 artifacts:
