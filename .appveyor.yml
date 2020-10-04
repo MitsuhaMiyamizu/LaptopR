@@ -55,5 +55,4 @@ deploy:
     description: R-v$(APPVEYOR_BUILD_VERSION)
     force_update: true
     on:
-      branch: main
       APPVEYOR_REPO_TAG: true
