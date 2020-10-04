@@ -41,7 +41,7 @@ build_script:
   - bash -c '7z a log.zip C:/projects/laptopr/log/'
 
 artifacts:
-  - path: C:/projects/laptopr/log.zip
+  - path: log.zip
 deploy:
    provider: GitHub
    auth_token:
