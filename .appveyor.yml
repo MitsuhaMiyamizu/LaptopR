@@ -52,7 +52,7 @@ deploy:
    auth_token:
       secure: ULbLUjD/4O1vvWimREM8MhhTC6yx7PtfPVF+MYaw4ZtJVbINLjQF0hwGCWh7U/ZC
    artifact: R.7z
-   prerelease: true
+   prerelease: false
    force_update: true
    tag: $(APPVEYOR_REPO_TAG_NAME)
    on:
