@@ -26,10 +26,10 @@ install:
   - ps: pwd
 
 build_script:
-  - ps: Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile license.lic
+  - ps: Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile $env:LICLOCAL
   - mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
   - mkdir "C:\\Program Files (x86)\Common Files\Intel\\Licenses\\"
-  - mv license.lic "C:\\Program Files (x86)\\Common Files\\Intel\\Licenses\\"
+  - mv $env:LICLOCAL "C:\\Program Files (x86)\\Common Files\\Intel\\Licenses\\"
   - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16896/w_mkl_2020.3.279.exe -OutFile mkl.exe
   - mkl.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
@@ -43,15 +43,15 @@ build_script:
   - nmake libintel64 MKLROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl" export=Rblas_list.txt name=Rblas 
   - nmake libintel64 MKLROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl" export=Rlapack_list.txt name=Rlapack
   - cd ..
-  - bash -c 'zip -r R.zip ./builder/'
+  - bash -c '7z a R.7z ./builder/'
 
 artifacts:
-  - path: R.zip
+  - path: R.7z
 deploy:
    provider: GitHub
    auth_token:
       secure: ULbLUjD/4O1vvWimREM8MhhTC6yx7PtfPVF+MYaw4ZtJVbINLjQF0hwGCWh7U/ZC
-   artifact: R.zip
+   artifact: R.7z
    prerelease: true
    force_update: true
    tag: $(APPVEYOR_REPO_TAG_NAME)
