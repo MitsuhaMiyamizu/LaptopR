@@ -37,10 +37,11 @@ build_script:
   - bash -c '7z x list.7z'
   - ps: cp -r 'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl\tools\builder\' 'C:\projects\laptopr\'
   - ps: ls
-  - ps: cp Rlapack_list_R.txt Rblas_list.txt .\builder\
+  - bash -c 'cp Rlapack_list.txt ./builder/'
+  - bash -c 'cp Rblas_list.txt ./builder/'
   - cd .\builder\
   - nmake libintel64 export=Rblas_list.txt name=Rblas 
-  - nmake libintel64 export=Rlapack_list_R.txt name=Rlapack
+  - nmake libintel64 export=Rlapack_list.txt name=Rlapack
   - cd ..
   - bash -c 'zip -r R.zip ./builder/'
 
