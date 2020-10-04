@@ -4,6 +4,7 @@ branches:
       - /[0-9].+[0-9]_MSVC+[0-9]*/
       - /[0-9].+[0-9]_OSX/
       - /^untagged/
+      - /R-v[0-9].[0-9].[0-9]/
 version: '{build}'
 platform:
   - x64
@@ -50,9 +51,9 @@ deploy:
     auth_token:
       secure: cBYFQ45LcM135O5JkMlE7tb4XmAUK709NnFe0o2RhpMUOFbRzqW6OFY7X2x/U/TZ
     artifact: R.7z
-    release: R-v$(APPVEYOR_BUILD_VERSION)
+    release: R-v$(APPVEYOR_REPO_TAG_NAME)
     prerelease: true
-    description: R-v$(APPVEYOR_BUILD_VERSION)
+    description: R-v$(APPVEYOR_REPO_TAG_NAME)
     force_update: true
     on:
       APPVEYOR_REPO_TAG: true
