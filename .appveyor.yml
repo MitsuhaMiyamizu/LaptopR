@@ -22,7 +22,7 @@ install:
   - ps: Import-Module .\script.ps1
   - ps: SetTimezone
   - ps: Invoke-WebRequest $env:RDEV -OutFile R-devel.zip
-  - bash -c 'unzip R-devel.zip'
+  - bash -c 'unzip -qq R-devel.zip'
   - dir
 build_script:
   - ps: Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile license.lic
