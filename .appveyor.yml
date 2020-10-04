@@ -35,22 +35,22 @@ build_script:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
   - ps: Invoke-WebRequest https://github.com/Neutron3529/Misc/releases/download/R_blas_lapack_list/R_blas_lapack_list.7z -OutFile list.7z
   - bash -c '7z x list.7z'
-  - bash -c 'cp -r C:/Program Files (x86)/IntelSWTools/compilers_and_libraries_2020.3.279/windows/mkl/tools/builder/ C:/projects/laptopr/'
+  - ps: cp -r 'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl\tools\builder\' 'C:\projects\laptopr\'
   - ps: ls
-  - ps: cp Rlapack_list_R.txt Rblas_list.txt builder/
-  - cd builder/
+  - ps: cp Rlapack_list_R.txt Rblas_list.txt .\builder\
+  - cd .\builder\
   - nmake libintel64 export=Rblas_list.txt name=Rblas 
   - nmake libintel64 export=Rlapack_list_R.txt name=Rlapack
   - cd ..
   - bash -c 'zip -r R.zip ./builder/'
 
 artifacts:
-  - path: log.zip
+  - path: R.zip
 deploy:
    provider: GitHub
    auth_token:
       secure: ULbLUjD/4O1vvWimREM8MhhTC6yx7PtfPVF+MYaw4ZtJVbINLjQF0hwGCWh7U/ZC
-   artifact: log.zip
+   artifact: R.zip
    prerelease: true
    force_update: true
    tag: $(APPVEYOR_REPO_TAG_NAME)
