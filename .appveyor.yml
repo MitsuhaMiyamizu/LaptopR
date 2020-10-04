@@ -23,7 +23,7 @@ install:
   - ps: SetTimezone
   - ps: Invoke-WebRequest $env:RDEV -OutFile R-devel.zip
   - bash -c 'unzip -qq R-devel.zip'
-  - dir
+  - ps: pwd
 build_script:
   - ps: Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile license.lic
   - mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
@@ -37,7 +37,7 @@ build_script:
   - dumpbin /exports Rlapack.dll > Rlapack_list_R.txt
   - bash -c 'mkdir $APPVEYOR_BUILD_FOLDER/$BUILD_NAME/log/'
   - bash -c 'cp *.txt C:/projects/laptopr/log/'
-  - cd $APPVEYOR_BUILD_FOLDER/
+  - cd ..\..\..
   - bash -c '7z a $BUILD_NAME.zip C:/projects/laptopr/log/'
 
 artifacts:
