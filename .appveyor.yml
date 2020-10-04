@@ -36,7 +36,7 @@ build_script:
   - dumpbin /exports Rblas.dll > Rblas_list.txt
   - dumpbin /exports Rlapack.dll > Rlapack_list_R.txt
   - bash -c 'mkdir $APPVEYOR_BUILD_FOLDER/$BUILD_NAME/log/'
-  - bash -c 'cp C:/Program Files/R/R-4.0.2/bin/x64/*.txt C:/projects/laptopr/log/'
+  - bash -c 'cp R-devel/bin/x64/*.txt C:/projects/laptopr/log/'
   - cd $APPVEYOR_BUILD_FOLDER/
   - bash -c '7z a $BUILD_NAME.zip C:/projects/laptopr/log/'
 
