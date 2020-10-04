@@ -1,7 +1,7 @@
 # LaptopR
 Vanilla R Compiled by mingw64 w/ Intel Math Kernel Library.
 
-**Reference**
+# Reference
 
 [R-windows](https://github.com/r-windows/r-base)
 
