@@ -10,30 +10,24 @@ platform:
 image: 
   - Visual Studio 2019
 environment:
-  LICENSE_FILE:
-    secure: A5hBQ7mj5AKj5G/EHyznf+xxg/Ct2E7R4OLtzN6/uVyI8udxG6ML9YnDkUzqXNsK
+  MKL_LICENSE_FILE:
+    secure: A5hBQ7mj5AKj5G/EHyznfyh00Brb92UkZ3MRZMrcSjqGyyVsH+sbg35pJRNEGs/Z
   LICLOCAL:
     secure: 2wEyKqfdkKVnTmihIh+X5g==  
   RTOOLS_ARCH: x86_64
 
 install:
   - ps: Import-Module .\script.ps1
-  - ps: InstallInno
-  - ps: InstallMiktex
-  - ps: InstallRtoolsExe
   - ps: SetTimezone
 
 build_script:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-  - ps: Invoke-WebRequest $env:LICENSE_FILE -OutFile license.lic
-  - dir
+  - ps: Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile license.lic
   - mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
   - mkdir "C:\\Program Files (x86)\Common Files\Intel\\Licenses\\"
   - mv license.lic "C:\\Program Files (x86)\\Common Files\\Intel\\Licenses\\"
-  - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16746/parallel_studio_xe_2020_update2_cluster_edition_setup.exe -OutFile parallel.exe
-  - dir
-  - parallel.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - ps: Invoke-WebRequest http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16896/w_mkl_2020.3.279.exe -OutFile mkl.exe
+  - mkl.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
   - ps: Invoke-WebRequest https://ftp.osuosl.org/pub/cran/bin/windows/base/R-devel-win.exe -OutFile Rwin.exe
   - ps: .\Rwin.exe /VERYSILENT
   - cd C:\Program Files\R\R-devel\bin\x64
