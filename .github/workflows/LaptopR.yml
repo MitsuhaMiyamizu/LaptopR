@@ -17,6 +17,7 @@ jobs:
       - name: Preparation
         shell: powershell
         run: |
+          pwd
           Import-Module .\script.ps1
           SetTimezone
           InstallInno
