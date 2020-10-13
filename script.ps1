@@ -27,7 +27,7 @@ function CheckExitCode($msg) {
 Function InstallRtoolsZip {
 	Write-Host "Installing ${RTOOLS_ZIP}..." -ForegroundColor Cyan
 	$tmp = "$($env:USERPROFILE)\${RTOOLS_ZIP}"
-	(New-Object Net.WebClient).DownloadFile($RTOOLS_MIRROR + $RTOOLS_ZIP, $tmp)
+	(new-object System.Net.WebClient).DownloadFile($RTOOLS_MIRROR + $RTOOLS_ZIP, $tmp)
 	7z x $tmp -y -oC:\ | Out-Null
 	CheckExitCode "Failed to extract ${RTOOLS_ZIP}"
 	C:\rtools40\usr\bin\bash.exe --login -c exit 2>$null
@@ -38,7 +38,7 @@ Function InstallRtoolsZip {
 Function InstallRtoolsExe {
 	Write-Host "Installing ${RTOOLS_EXE}..." -ForegroundColor Cyan
 	$tmp = "$($env:USERPROFILE)\${RTOOLS_EXE}"	
-	(New-Object Net.WebClient).DownloadFile($RTOOLS_MIRROR + $RTOOLS_EXE, $tmp)
+	(new-object System.Net.WebClient).DownloadFile($RTOOLS_MIRROR + $RTOOLS_EXE, $tmp)
 	Start-Process -FilePath $tmp -ArgumentList /VERYSILENT -NoNewWindow -Wait
 	Write-Host "Installation of ${RTOOLS_EXE} done!" -ForegroundColor Green
 }
@@ -125,7 +125,7 @@ Function InstallMSYS32 {
 	$zipPath = "$($env:USERPROFILE)\msys2-i686-latest.tar.xz"
 	$tarPath = "$($env:USERPROFILE)\msys2-i686-latest.tar"
 	Write-Host "Downloading MSYS installation package..."
-	(New-Object Net.WebClient).DownloadFile('http://repo.msys2.org/distrib/msys2-i686-latest.tar.xz', $zipPath)
+	(new-object System.Net.WebClient).DownloadFile('http://repo.msys2.org/distrib/msys2-i686-latest.tar.xz', $zipPath)
 
 	Write-Host "Untaring installation package..."
 	7z x $zipPath -y -o"$env:USERPROFILE" | Out-Null
