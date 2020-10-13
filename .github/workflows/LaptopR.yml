@@ -15,10 +15,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Run Stage 1
-        shell: cmd
+        shell: powershell
         run: |
-          mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
-          mkdir "C:\\Program Files (x86)\\Common Files\Intel\\Licenses\\"
+          mkdir "C:\Program Files (x86)\Common Files\Intel"
+          mkdir "C:\Program Files (x86)\Common Files\Intel\Licenses\"
           Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile $env:LICLOCAL
       - name: Run Stage 2
         run: |
