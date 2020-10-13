@@ -1,0 +1,29 @@
+name: LaptopR
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Step 1
+        shell: powershell
+        run: |
+          .\step1.ps1
+      - name: Run Stage 1
+        shell: cmd
+        run: |
+          mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
+          mkdir "C:\\Program Files (x86)\\Common Files\Intel\\Licenses\\"
+      - name: Run Stage 2
+          mv $env:LICLOCAL "C:\Program Files (x86)\Common Files\Intel\Licenses\"
+      - name: Run Stage 3
+        shell: powershell
+        run: |
+          powershell: .\step2.ps1
+          powershell: .\step1.ps1
