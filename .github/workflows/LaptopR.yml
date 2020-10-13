@@ -20,14 +20,14 @@ jobs:
           mkl_license: ${{ secrets.MKL_LICENSE_FILE }}
           LICLOC: ${{ secrets.LICLOCAL }}
         run: |
-          mkdir "C:\Program Files\Common Files\Intel"
-          mkdir "C:\Program Files\Common Files\Intel\Licenses\"
-          Invoke-WebRequest "$env:mkl_license" -OutFile $env:LICLOC
+          mkdir "C:\Program Files (x86)\Common Files\Intel"
+          mkdir "C:\Program Files (x86)\Common Files\Intel\Licenses\"
+          Invoke-WebRequest "$env:mkl_license" -OutFile license.lic
       - name: Run Stage 2
         env:
           LICLOC: ${{ secrets.LICLOCAL }}
         run: |
-          mv $env:LICLOC "C:\Program Files\Common Files\Intel\Licenses\"
+          mv license.lic "C:\Program Files (x86)\Common Files\Intel\Licenses\"
       - name: Run Stage 3
         shell: powershell
         run: |
