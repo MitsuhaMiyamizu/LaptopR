@@ -22,7 +22,7 @@ jobs:
         run: |
           mkdir "C:\Program Files (x86)\Common Files\Intel"
           mkdir "C:\Program Files (x86)\Common Files\Intel\Licenses\"
-          Invoke-WebRequest "$env:mkl_license" -OutFile license.lic
+          (new-object Net.WebClient).DownloadFile('$env:mkl_license', 'license.lic')
           ls
       - name: Run Stage 2
         env:
