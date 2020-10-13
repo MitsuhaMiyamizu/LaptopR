@@ -25,7 +25,7 @@ jobs:
           Invoke-WebRequest $env:rsource_url -OutFile R-4.0.3.tar.gz
       - name: Run a Full Build
         run: |
-          C:\rtools40\usr\bin\bash --login -c "tar xzf /d/a/LaptopR/LaptopR/R-4.0.3.tar.gz"
+          C:\rtools40\usr\bin\bash --login -c "tar xf /d/a/LaptopR/LaptopR/R-4.0.3.tar.gz"
           C:\rtools40\usr\bin\bash --login -c "/d/a/LaptopR/LaptopR/full-build.sh"
       - name: Run Stage 1
         shell: cmd
