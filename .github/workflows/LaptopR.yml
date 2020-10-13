@@ -24,7 +24,7 @@ jobs:
           InstallRtoolsExe    
       - name: Run a Full Build
         run: |
-          C:\rtools40\usr\bin\bash --login -c "/D/a/LaptopR/LaptopR/full-build.sh"
+          C:\rtools40\usr\bin\bash --login -c "/d/a/LaptopR/LaptopR/full-build.sh"
       - name: Run Stage 1
         shell: cmd
         run: |
