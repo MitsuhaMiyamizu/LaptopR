@@ -24,6 +24,7 @@ jobs:
           mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
           mkdir "C:\\Program Files (x86)\\Common Files\Intel\\Licenses\\"
       - name: Run Stage 2
+        run: |
           mv $env:LICLOCAL "C:\Program Files (x86)\Common Files\Intel\Licenses\"
       - name: Run Stage 3
         shell: powershell
