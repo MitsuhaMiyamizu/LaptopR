@@ -23,6 +23,7 @@ jobs:
           mkdir "C:\Program Files (x86)\Common Files\Intel"
           mkdir "C:\Program Files (x86)\Common Files\Intel\Licenses\"
           Invoke-WebRequest "$env:mkl_license" -OutFile license.lic
+          ls
       - name: Run Stage 2
         env:
           LICLOC: ${{ secrets.LICLOCAL }}
