@@ -31,7 +31,7 @@ jobs:
       - name: Run Stage 3
         shell: powershell
         run: |
-          powershell: .\step2.ps1
+          .\step2.ps1
       - name: Preparation
         shell: powershell
         run: |
