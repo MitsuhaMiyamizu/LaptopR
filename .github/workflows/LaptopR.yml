@@ -14,15 +14,22 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Run Step 1
+      - name: Preparation
         shell: powershell
         run: |
-          .\step1.ps1
+          Import-Module .\script.ps1
+          SetTimezone
+          InstallInno
+          InstallMiktex
+          InstallRtoolsExe    
+      - name: Run a Full Build
+          C:\rtools40\usr\bin\bash --login -c "./full-build.sh"
       - name: Run Stage 1
         shell: cmd
         run: |
           mkdir "C:\\Program Files (x86)\\Common Files\\Intel"
           mkdir "C:\\Program Files (x86)\\Common Files\Intel\\Licenses\\"
+          Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile $env:LICLOCAL
       - name: Run Stage 2
         run: |
           mv $env:LICLOCAL "C:\Program Files (x86)\Common Files\Intel\Licenses\"
