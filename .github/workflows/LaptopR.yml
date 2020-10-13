@@ -25,7 +25,7 @@ jobs:
           Invoke-WebRequest "$env:mkl_license" -OutFile $env:LICLOC
       - name: Run Stage 2
         env:
-          LICLOC: ${{ LICLOCAL }}
+          LICLOC: ${{ secrets.LICLOCAL }}
         run: |
           mv $env:LICLOCAL "C:\Program Files (x86)\Common Files\Intel\Licenses\"
       - name: Run Stage 3
