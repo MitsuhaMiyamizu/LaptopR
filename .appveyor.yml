@@ -18,12 +18,19 @@ environment:
   RTOOLS_ARCH: x86_64
   RDEV:
     secure: A5hBQ7mj5AKj5G/EHyznf5XXbNf7jVVKS4PPQ0wJGKjU50Qcy87HFx9KZx0jF3WM
+  matrix:
+    - rsource_url: https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz
+      rversion: r-patched
+      cran: true
 
 install:
   - ps: Import-Module .\script.ps1
   - ps: SetTimezone
-  - ps: Invoke-WebRequest $env:RDEV -OutFile R-devel.zip
-  - bash -c 'unzip -qq R-devel.zip'
+  - ps: InstallInno
+  - ps: InstallMiktex
+  - ps: InstallRtoolsExe
+# - ps: Invoke-WebRequest $env:RDEV -OutFile R-devel.zip
+# - bash -c 'unzip -qq R-devel.zip'
 
 build_script:
   - ps: Invoke-WebRequest $env:MKL_LICENSE_FILE -OutFile license.lic
@@ -40,9 +47,10 @@ build_script:
   - cd .\builder\
   - nmake libintel64 MKLROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl" export=Rblas_list.txt name=Rblas 
   - nmake libintel64 MKLROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl" export=Rlapack_list.txt name=Rlapack
+  - C:\rtools40\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/full-build.sh"
   - cd ..
   - dumpbin /dependents ./builder/Rlapack.dll
-  - bash -c '7z a R.7z ./builder/'
+  - bash -c '7z a R.7z ./R-devel/'
 
 artifacts:
   - path: R.7z

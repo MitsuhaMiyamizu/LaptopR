@@ -2,8 +2,8 @@
 
 ## Toolchain config
 WIN = @win@
-#BINPREF = /mingw32/bin/
-BINPREF64 = C:/Program Files (x86)/IntelSWTools/parallel_studio_xe_2020.2.899/bin/
+BINPREF = /mingw32/bin/
+BINPREF64 = /mingw64/bin/
 
 ## Add custom compile flags here
 # EOPTS = -mtune=generic
@@ -13,8 +13,8 @@ USE_ICU = YES
 USE_LIBCURL = YES
 BUILD_HTML = YES
 USE_ATLAS = NO
-MIKTEX = FALSE
-OPENMP = -qopenmp
+MIKTEX = TRUE
+OPENMP = -fopenmp
 
 ## Curl / ICU flags
 CURL_LIBS = -lcurl -lssh2 -lz -lssl -lcrypto -lgdi32 -lws2_32 -lcrypt32 -lwldap32

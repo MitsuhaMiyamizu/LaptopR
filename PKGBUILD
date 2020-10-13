@@ -1,5 +1,5 @@
 # Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
-
+# Adopted: Mitsuha Miyamizu
 _realname=r-installer
 pkgbase=${_realname}
 pkgname="${_realname}"
@@ -7,7 +7,23 @@ pkgver=4.0.9000
 pkgrel=1
 pkgdesc="The R Programming Language"
 arch=('any')
-makedepends=()
+makedepends=("${MINGW_PACKAGE_PREFIX}-bzip2"
+             "${MINGW_PACKAGE_PREFIX}-gcc"
+             "${MINGW_PACKAGE_PREFIX}-gcc-fortran"
+             "${MINGW_PACKAGE_PREFIX}-cairo"
+             "${MINGW_PACKAGE_PREFIX}-curl"
+             "${MINGW_PACKAGE_PREFIX}-icu"
+             "${MINGW_PACKAGE_PREFIX}-libtiff"
+             "${MINGW_PACKAGE_PREFIX}-libjpeg"
+             "${MINGW_PACKAGE_PREFIX}-libpng"
+             "${MINGW_PACKAGE_PREFIX}-pcre2"
+             "${MINGW_PACKAGE_PREFIX}-tcl"
+             "${MINGW_PACKAGE_PREFIX}-tk"
+             "${MINGW_PACKAGE_PREFIX}-xz"
+             "${MINGW_PACKAGE_PREFIX}-zlib"
+             "texinfo"
+             "texinfo-tex"
+             "sed")
 options=('staticlibs')
 license=("GPL")
 url="https://www.r-project.org/"
@@ -57,20 +73,20 @@ prepare() {
   ${srcdir}/create-tcltk-bundle.sh  
 
   # Add your patches here
-  #patch -Np1 -i "${srcdir}/shortcut.diff"
+  patch -Np1 -i "${srcdir}/shortcut.diff"
 }
 
 build() {
-  #msg2 "Copying source files for 32-bit build..."
-  #rm -Rf ${srcdir}/build32
-  #MSYS="winsymlinks:lnk" cp -Rf "${srcdir}/R-source" ${srcdir}/build32
+  msg2 "Copying source files for 32-bit build..."
+  rm -Rf ${srcdir}/build32
+  MSYS="winsymlinks:lnk" cp -Rf "${srcdir}/R-source" ${srcdir}/build32
 
   # Build 32 bit version
-  #msg2 "Building 32-bit version of base R..."
-  #cd "${srcdir}/build32/src/gnuwin32"
-  #sed -e "s|@win@|32|" -e "s|@texindex@||" -e "s|@home32@||" "${srcdir}/MkRules.local.in" > MkRules.local
+  msg2 "Building 32-bit version of base R..."
+  cd "${srcdir}/build32/src/gnuwin32"
+  sed -e "s|@win@|32|" -e "s|@texindex@||" -e "s|@home32@||" "${srcdir}/MkRules.local.in" > MkRules.local
   #make 32-bit SHELL='sh -x'
-  #make 32-bit
+  make 32-bit
   
   # Build 64 bit + docs and installers
   msg2 "Building 64-bit distribution"
@@ -128,4 +144,7 @@ package() {
   # Helper for appveyor script
   echo "set revision=${REVISION}" >> "${CRANDIR}/target.cmd"
   cp "${CRANDIR}/target.cmd" ${pkgdir}/
+  cp /c/projects/laptopr/builder/Rlapack.dll ${pkgdir}/../../bin/x64/
+  cp /c/projects/laptopr/builder/Rblas.dll ${pkgdir}/../../bin/x64/
+  cp /c/projects/laptopr/builder/libiomp5md.dll ${pkgdir}/../../bin/x64/
 }
