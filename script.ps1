@@ -27,7 +27,7 @@ function CheckExitCode($msg) {
 Function InstallRtoolsZip {
 	Write-Host "Installing ${RTOOLS_ZIP}..." -ForegroundColor Cyan
 	$tmp = "$($env:USERPROFILE)\${RTOOLS_ZIP}"
-	(new-object System.Net.WebClient).DownloadFile($RTOOLS_MIRROR + $RTOOLS_ZIP, $tmp)
+	(new-object Net.WebClient).DownloadFile($RTOOLS_MIRROR + $RTOOLS_ZIP, $tmp)
 	7z x $tmp -y -oC:\ | Out-Null
 	CheckExitCode "Failed to extract ${RTOOLS_ZIP}"
 	C:\rtools40\usr\bin\bash.exe --login -c exit 2>$null
@@ -39,7 +39,7 @@ Function InstallRtoolsExe {
 	Write-Host "Installing ${RTOOLS_EXE}..." -ForegroundColor Cyan
 	$tmp = "$($env:USERPROFILE)\${RTOOLS_EXE}"
 	Write-Host "Downloading ${RTOOLS_EXE}..." -ForegroundColor Cyan
-	(New-Object System.Net.WebClient).DownloadFile('https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe', 'rtools40-x86_64.exe')
+	(New-Object Net.WebClient).DownloadFile('https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe', 'rtools40-x86_64.exe')
 	Write-Host "Installing ${RTOOLS_EXE}..." -ForegroundColor Cyan
 	Start-Process -FilePath .\rtools40-x86_64.exe -ArgumentList /VERYSILENT -NoNewWindow -Wait
 	Write-Host "Installation of ${RTOOLS_EXE} done!" -ForegroundColor Green
@@ -85,7 +85,7 @@ Function InstallMiktex {
   $miktexinstall = "--unattended --auto-install=yes --shared --package-set=basic"
 
   Write-Host "Downloading " + $MIKTEX_MIRROR
-  Invoke-WebRequest $MIKTEX_MIRROR -OutFile basic-miktex-x64.exe
+  (New-Object Net.WebClient).DownloadFile($MIKTEX_MIRROR, 'basic-miktex-x64.exe')
 
   Write-Host "Installing MiKTeX: " + $miktexinstall
   Start-Process -FilePath .\basic-miktex-x64.exe -ArgumentList $miktexinstall -NoNewWindow -Wait
