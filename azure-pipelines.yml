@@ -15,7 +15,7 @@ steps:
 - bash: mkdir "C:\\Program Files (x86)\\Common Files\Intel\\Licenses\\"
 - bash: mv $env:LICLOCAL "C:\Program Files (x86)\Common Files\Intel\Licenses\"
 - powershell: .\step2.ps1
-- script:  C:\rtools40\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/full-build.sh"
+- powershell: .\step1.ps1
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: './R-devel/'
