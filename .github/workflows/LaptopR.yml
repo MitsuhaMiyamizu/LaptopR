@@ -19,7 +19,7 @@ jobs:
         run: |
           mkdir "C:\Program Files (x86)\Common Files\Intel"
           mkdir "C:\Program Files (x86)\Common Files\Intel\Licenses\"
-          Invoke-WebRequest -Url "$env:MKL_LICENSE_FILE" -OutFile $env:LICLOCAL
+          Invoke-WebRequest "$env:MKL_LICENSE_FILE" -OutFile $env:LICLOCAL
       - name: Run Stage 2
         run: |
           mv $env:LICLOCAL "C:\Program Files (x86)\Common Files\Intel\Licenses\"
