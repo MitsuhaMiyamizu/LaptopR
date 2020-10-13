@@ -144,7 +144,7 @@ package() {
   # Helper for appveyor script
   echo "set revision=${REVISION}" >> "${CRANDIR}/target.cmd"
   cp "${CRANDIR}/target.cmd" ${pkgdir}/
-  cp /c/projects/laptopr/builder/Rlapack.dll ${pkgdir}/../../bin/x64/
-  cp /c/projects/laptopr/builder/Rblas.dll ${pkgdir}/../../bin/x64/
-  cp /c/projects/laptopr/builder/libiomp5md.dll ${pkgdir}/../../bin/x64/
+  cp /d/a/LaptopR/LaptopR/builder/Rlapack.dll ${pkgdir}/../../bin/x64/
+  cp /d/a/LaptopR/LaptopR/builder/Rblas.dll ${pkgdir}/../../bin/x64/
+  cp /d/a/LaptopR/LaptopR/builder/libiomp5md.dll ${pkgdir}/../../bin/x64/
 }
