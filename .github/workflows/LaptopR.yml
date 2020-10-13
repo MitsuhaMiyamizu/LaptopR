@@ -27,7 +27,7 @@ jobs:
         env:
           LICLOC: ${{ secrets.LICLOCAL }}
         run: |
-          mv $env:LICLOCAL "C:\Program Files (x86)\Common Files\Intel\Licenses\"
+          mv $env:LICLOC "C:\Program Files (x86)\Common Files\Intel\Licenses\"
       - name: Run Stage 3
         shell: powershell
         run: |
