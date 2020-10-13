@@ -85,10 +85,10 @@ Function InstallMiktex {
   $miktexinstall = "--unattended --auto-install=yes --shared --package-set=basic"
 
   Write-Host "Downloading " + $MIKTEX_MIRROR
-  & "C:\Program Files\Git\mingw64\bin\curl.exe" -s -o ../basic-miktex-x64.exe -L $MIKTEX_MIRROR
+  Invoke-WebRequest $MIKTEX_MIRROR -OutFile basic-miktex-x64.exe
 
   Write-Host "Installing MiKTeX: " + $miktexinstall
-  Start-Process -FilePath ..\basic-miktex-x64.exe -ArgumentList $miktexinstall -NoNewWindow -Wait
+  Start-Process -FilePath .\basic-miktex-x64.exe -ArgumentList $miktexinstall -NoNewWindow -Wait
 
   Write-Host "Setting PATH variable for current process"
   $env:PATH = 'C:\Program Files\MiKTeX\miktex\bin\x64;' + $env:PATH
