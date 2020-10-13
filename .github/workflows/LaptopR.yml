@@ -17,8 +17,8 @@ jobs:
       - name: Run Stage 1
         shell: powershell
         env:
-          mkl_license: ${{ MKL_LICENSE_FILE }}
-          LICLOC: ${{ LICLOCAL }}
+          mkl_license: ${{ secrets.MKL_LICENSE_FILE }}
+          LICLOC: ${{ secrets.LICLOCAL }}
         run: |
           mkdir "C:\Program Files (x86)\Common Files\Intel"
           mkdir "C:\Program Files (x86)\Common Files\Intel\Licenses\"
