@@ -39,7 +39,7 @@ Function InstallRtoolsExe {
 	Write-Host "Installing ${RTOOLS_EXE}..." -ForegroundColor Cyan
 	$tmp = "$($env:USERPROFILE)\${RTOOLS_EXE}"
 	Write-Host "Downloading ${RTOOLS_EXE}..." -ForegroundColor Cyan
-	Download-File-With-Retries -url "'https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe" -destfile "Rtools.exe"
+	(new-object Net.WebClient).DownloadFile('http://lib.stat.cmu.edu/R/CRAN/bin/windows/Rtools/rtools40-x86_64.exe', 'Rtools.exe')
         ls
 	Write-Host "Installing ${RTOOLS_EXE}..." -ForegroundColor Cyan
 	Start-Process -FilePath .\Rtools.exe -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES" -NoNewWindow -Wait
