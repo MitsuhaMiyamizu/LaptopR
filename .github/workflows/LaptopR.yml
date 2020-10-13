@@ -31,6 +31,9 @@ jobs:
       - name: Run Stage 3
         shell: powershell
         run: |
+          (new-object Net.WebClient).DownloadFile('http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16896/w_mkl_2020.3.279.exe','mkl.exe')
+          ls
+          mkl.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
           .\step2.ps1
       - name: Preparation
         shell: powershell
