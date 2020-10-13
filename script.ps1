@@ -37,8 +37,10 @@ Function InstallRtoolsZip {
 # Don't use installer when: (1) architecture doesn't match host (2) Dir C:/rtools40 already exists
 Function InstallRtoolsExe {
 	Write-Host "Installing ${RTOOLS_EXE}..." -ForegroundColor Cyan
-	$tmp = "$($env:USERPROFILE)\${RTOOLS_EXE}"	
-	(new-object System.Net.WebClient).DownloadFile($RTOOLS_MIRROR + $RTOOLS_EXE, $tmp)
+	$tmp = "$($env:USERPROFILE)\${RTOOLS_EXE}"
+	Write-Host "Downloading ${RTOOLS_EXE}..." -ForegroundColor Cyan
+	Invoke-WebRequest https://ftp.osuosl.org/pub/cran/bin/windows/Rtools/rtools40-x86_64.exe -OutFile $tmp
+	Write-Host "Installing ${RTOOLS_EXE}..." -ForegroundColor Cyan
 	Start-Process -FilePath $tmp -ArgumentList /VERYSILENT -NoNewWindow -Wait
 	Write-Host "Installation of ${RTOOLS_EXE} done!" -ForegroundColor Green
 }
