@@ -42,7 +42,7 @@ jobs:
         shell: cmd
         run: |
           cd D:\a\LaptopR\LaptopR\builder\
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
           nmake libintel64 MKLROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl" export=Rblas_list.txt name=Rblas 
           nmake libintel64 MKLROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl" export=Rlapack_list.txt name=Rlapack
           dumpbin /dependents .\builder\Rlapack.dll
