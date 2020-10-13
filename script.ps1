@@ -4,8 +4,8 @@ $RTOOLS_ZIP = "rtools40-${RTOOLS_ARCH}.7z"
 $RTOOLS_EXE = "rtools40-${RTOOLS_ARCH}.exe"
 
 ### Use for bootstrapping installation
-#$RTOOLS_MIRROR = "https://dl.bintray.com/rtools/installer/"
-$RTOOLS_MIRROR = "https://ftp.osuosl.org/pub/cran/bin/windows/Rtools/"
+$RTOOLS_MIRROR = "https://dl.bintray.com/rtools/installer/"
+# $RTOOLS_MIRROR = "https://ftp.osuosl.org/pub/cran/bin/windows/Rtools/"
 # $RTOOLS_MIRROR = "https://ftp.opencpu.org/archive/rtools/4.0/"
 
 ### InnoSetup Mirror
@@ -39,7 +39,7 @@ Function InstallRtoolsExe {
 	Write-Host "Installing ${RTOOLS_EXE}..." -ForegroundColor Cyan
 	$tmp = "$($env:USERPROFILE)\${RTOOLS_EXE}"
 	Write-Host "Downloading ${RTOOLS_EXE}..." -ForegroundColor Cyan
-	(new-object System.Net.WebClient).DownloadFile(https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe, $tmp)
+	(New-Object Net.WebClient).DownloadFile($RTOOLS_MIRROR + $RTOOLS_EXE, $tmp)
 	Write-Host "Installing ${RTOOLS_EXE}..." -ForegroundColor Cyan
 	Start-Process -FilePath $tmp -ArgumentList /VERYSILENT -NoNewWindow -Wait
 	Write-Host "Installation of ${RTOOLS_EXE} done!" -ForegroundColor Green
