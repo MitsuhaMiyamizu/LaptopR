@@ -42,7 +42,7 @@ Function InstallRtoolsExe {
 	(new-object Net.WebClient).DownloadFile('http://lib.stat.cmu.edu/R/CRAN/bin/windows/Rtools/rtools40-x86_64.exe', 'Rtools.exe')
         ls
 	Write-Host "Installing ${RTOOLS_EXE}..." -ForegroundColor Cyan
-	Start-Process -FilePath .\Rtools.exe -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES" -NoNewWindow -Wait
+	.\Rtools.exe /VERYSILENT /SUPPRESSMSGBOXES /DIR="C:\rtools40\" ; Check-Output $?
 	Write-Host "Installation of ${RTOOLS_EXE} done!" -ForegroundColor Green
 }
 
