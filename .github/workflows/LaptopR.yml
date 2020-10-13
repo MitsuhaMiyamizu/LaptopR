@@ -20,20 +20,20 @@ jobs:
           mkl_license: ${{ secrets.MKL_LICENSE_FILE }}
           LICLOC: ${{ secrets.LICLOCAL }}
         run: |
-          mkdir "C:\Program Files (x86)\Common Files\Intel"
-          mkdir "C:\Program Files (x86)\Common Files\Intel\Licenses\"
+          mkdir "C:\Program Files\Common Files\Intel"
+          mkdir "C:\Program Files\Common Files\Intel\Licenses\"
           Invoke-WebRequest "$env:mkl_license" -OutFile $env:LICLOC
       - name: Run Stage 2
         env:
           LICLOC: ${{ secrets.LICLOCAL }}
         run: |
-          mv $env:LICLOC "C:\Program Files (x86)\Common Files\Intel\Licenses\"
+          mv $env:LICLOC "C:\Program Files\Common Files\Intel\Licenses\"
       - name: Run Stage 3
         shell: powershell
         run: |
           (new-object Net.WebClient).DownloadFile('http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16896/w_mkl_2020.3.279.exe','mkl.exe')
           ls
-          .\mkl.exe --silent -a install --license="C:\Program Files (x86)\Common Files\Intel\Licenses\license.lic" --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
+          .\mkl.exe --silent -a install --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
           cp -r 'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl\tools\builder\' 'D:\a\LaptopR\LaptopR\'
           cp Rlapack_list.txt .\builder\
           cp Rblas_list.txt .\builder\
