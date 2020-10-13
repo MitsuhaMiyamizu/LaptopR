@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ main ]
 env:
-  rsource_url: https://cran.r-project.org/src/base-prerelease/R-latest.tar.gz
+  rsource_url: https://cran.r-project.org/src/base/R-4/R-4.0.3.tar.gz
   RTOOLS_ARCH: x86_64
 jobs:
   build:
@@ -21,9 +21,11 @@ jobs:
           SetTimezone
           InstallInno
           InstallMiktex
-          InstallRtoolsExe    
+          InstallRtoolsExe
+          Invoke-WebRequest $env:rsource_url -OutFile R-4.0.3.tar.gz
       - name: Run a Full Build
         run: |
+          C:\rtools40\usr\bin\bash --login -c "tar xzf /d/a/LaptopR/LaptopR/R-4.0.3.tar.gz"
           C:\rtools40\usr\bin\bash --login -c "/d/a/LaptopR/LaptopR/full-build.sh"
       - name: Run Stage 1
         shell: cmd
