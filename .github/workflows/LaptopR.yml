@@ -14,16 +14,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Preparation
-        shell: powershell
-        run: |
-          Import-Module .\script.ps1
-          SetTimezone
-          InstallInno
-          InstallMiktex
-          InstallRtoolsExe
-          Invoke-WebRequest $env:rsource_url -OutFile R-4.0.3.tar.gz
-          C:\rtools40\usr\bin\bash --login -c "/d/a/LaptopR/LaptopR/full-build.sh"
       - name: Run Stage 1
         shell: cmd
         run: |
@@ -37,3 +27,13 @@ jobs:
         shell: powershell
         run: |
           powershell: .\step2.ps1
+      - name: Preparation
+        shell: powershell
+        run: |
+          Import-Module .\script.ps1
+          SetTimezone
+          InstallInno
+          InstallMiktex
+          InstallRtoolsExe
+          Invoke-WebRequest $env:rsource_url -OutFile R-4.0.3.tar.gz
+          C:\rtools40\usr\bin\bash --login -c "/d/a/LaptopR/LaptopR/full-build.sh"
