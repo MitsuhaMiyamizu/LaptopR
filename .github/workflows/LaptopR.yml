@@ -38,4 +38,3 @@ jobs:
         shell: powershell
         run: |
           powershell: .\step2.ps1
-          powershell: .\step1.ps1
