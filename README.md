@@ -3,7 +3,7 @@ Vanilla R Compiled by mingw64 w/ Intel Math Kernel Library.
 
 # Build Status
 
-[![Build Status](https://ci.appveyor.com/api/projects/status/4cw0h6yt854gpfxv)](https://ci.appveyor.com/project/Kiritoalex/laptopr)
+[![Build Status](https://dev.azure.com/medbioinfo/seqmap/_apis/build/status/MitsuhaMiyamizu.LaptopR?branchName=main)](https://dev.azure.com/medbioinfo/seqmap/_build/latest?definitionId=4&branchName=main)
 
 # Reference
 
