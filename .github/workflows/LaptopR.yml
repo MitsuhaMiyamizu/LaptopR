@@ -16,11 +16,16 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Stage 1
         shell: powershell
+        env:
+          mkl_license: ${{ MKL_LICENSE_FILE }}
+          LICLOC: ${{ LICLOCAL }}
         run: |
           mkdir "C:\Program Files (x86)\Common Files\Intel"
           mkdir "C:\Program Files (x86)\Common Files\Intel\Licenses\"
-          Invoke-WebRequest "$env:MKL_LICENSE_FILE" -OutFile $env:LICLOCAL
+          Invoke-WebRequest "$env:mkl_license" -OutFile $env:LICLOC
       - name: Run Stage 2
+        env:
+          LICLOC: ${{ LICLOCAL }}
         run: |
           mv $env:LICLOCAL "C:\Program Files (x86)\Common Files\Intel\Licenses\"
       - name: Run Stage 3
