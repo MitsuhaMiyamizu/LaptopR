@@ -22,10 +22,11 @@ jobs:
           mkdir "C:\Program Files (x86)\Common Files\Intel"
           mkdir "C:\Program Files (x86)\Common Files\Intel\Licenses\"
           Invoke-WebRequest $env:mkl_license -OutFile license.lic
-          ls 'C:\Program Files (x86)\Common Files\Intel\Licenses\'
+          ls .
       - name: Run Stage 2
         run: |
           mv license.lic "C:\Program Files (x86)\Common Files\Intel\Licenses\"
+          ls 'C:\Program Files (x86)\Common Files\Intel\Licenses\'
       - name: Run Stage 3
         shell: powershell
         run: |
