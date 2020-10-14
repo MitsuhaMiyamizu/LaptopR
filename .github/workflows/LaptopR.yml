@@ -26,7 +26,12 @@ jobs:
         run: |
           (new-object Net.WebClient).DownloadFile('http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/16896/w_mkl_2020.3.279.exe','mkl.exe')
           ls
-          Start-Process -FilePath .\mkl.exe -ArgumentList "--silent -a install --license=.\license.lic --eula=accept --output=install.log --intel_sw_improvement_program_consent=no" -NoNewWindow -Wait
+      - name: Install MKL
+        shell: cmd
+        run: |
+          mkl.exe --silent -a install --license=.\license.lic --eula=accept --output=install.log --intel_sw_improvement_program_consent=no
+      - name: Run Stage 4
+        run: |
           cp -r 'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020.3.279\windows\mkl\tools\builder\' 'D:\a\LaptopR\LaptopR\'
           cp Rlapack_list.txt .\builder\
           cp Rblas_list.txt .\builder\
