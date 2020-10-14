@@ -21,8 +21,8 @@ jobs:
         run: |
           mkdir "C:\Program Files (x86)\Common Files\Intel"
           mkdir "C:\Program Files (x86)\Common Files\Intel\Licenses\"
-          Invoke-WebRequest "$env:mkl_license" -OutFile license.lic
-          ls "C:\Program Files (x86)\Common Files\Intel\Licenses\"
+          Invoke-WebRequest $env:mkl_license -OutFile license.lic
+          ls 'C:\Program Files (x86)\Common Files\Intel\Licenses\'
       - name: Run Stage 2
         run: |
           mv license.lic "C:\Program Files (x86)\Common Files\Intel\Licenses\"
@@ -52,5 +52,5 @@ jobs:
           InstallInno
           InstallMiktex
           InstallRtoolsExe
-          Invoke-WebRequest "$env:rsource_url" -OutFile R-4.0.3.tar.gz
+          Invoke-WebRequest $env:rsource_url -OutFile R-4.0.3.tar.gz
           C:\rtools40\usr\bin\bash --login -c "/d/a/LaptopR/LaptopR/full-build.sh"
